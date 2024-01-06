@@ -2,7 +2,7 @@
 let xPlayer = '';
 let oPlayer = '';
 
-// define every winning combinations using cellId 
+// define every winning combinations 
 const winners = ['123', '456', '789', '147', '258', '369', '159', '357'];
 
 // creating a current player
