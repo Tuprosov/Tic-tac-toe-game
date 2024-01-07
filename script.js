@@ -13,20 +13,28 @@ let gameOver = false;
 const cells = Array.from(document.querySelectorAll('#gameBoard td'));
 const message = document.getElementById("winMessage");
 const newGame = document.getElementById("newGame");
-console.log(cells)
-cells.forEach((cell) => cell.addEventListener('click', function() {
+
+startGame();
+
+function startGame() {
+    cells.forEach((cell) => cell.addEventListener('click', handleClick)) 
+}
+
+function handleClick (){
     // if game is finished dont do anything;
     if (gameOver) {
         return
     }
 
-    if(!xPlayer.includes(cell.id) && !oPlayer.includes(cell.id)) {
+    if(!xPlayer.includes(this.id) && !oPlayer.includes(this.id)) {
         if(currentPlayer === 'X') {
-            xPlayer += cell.id;
-            cell.textContent = 'X';
+            xPlayer += this.id;
+            this.textContent = 'X';
+            this.classList.add('hover');
         } else {
-            oPlayer += cell.id;
-            cell.textContent = 'O';
+            oPlayer += this.id;
+            this.textContent = 'O';
+            this.classList.add('hover');
         }
     } else {
         return
@@ -46,8 +54,7 @@ cells.forEach((cell) => cell.addEventListener('click', function() {
 
     // change players for the next move
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    
-}));
+}
 
 function checkWinner(playerMoves) {
     return winners.some(combination => combination.split('')
@@ -57,8 +64,14 @@ function checkWinner(playerMoves) {
 newGame.addEventListener('click', function() {
     xPlayer = '';
     oPlayer = '';
+    currentPlayer = 'X';
+    gameOver = false
     message.style.display = 'none';
     cells.forEach(cell => {
         cell.textContent = '';
+        cell.classList.remove('hover');
+        cell.removeEventListener('click', handleClick)
     })
+
+    startGame();
 })
